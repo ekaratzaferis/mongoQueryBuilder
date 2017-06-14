@@ -12,7 +12,7 @@ It's fairly simple to use.
 
 ## Installation
 
-####npm install mongoquerybuilder
+#### npm install mongoquerybuilder
 
 https://www.npmjs.com/package/mongoquerybuilder
 
