@@ -139,7 +139,7 @@ The allowed operations are:
 Start of by requiring the index file in the root folder:
 
 ```javascript
-const queryBuilder = require('../index')
+const queryBuilder = require('mongoquerybuilder')
 ```
 
 Then define your expressions and conditions:
@@ -161,7 +161,7 @@ var expressions = {
 var conditions = {
     COUNTRY_IS_USA: {                     // LABEL
         prop: 'build.country',            // DOCUMENT PROPERTY
-        op: 'equals',                      // OPERATION
+        op: 'equals',                     // OPERATION
         value: 'USA'                      // VALUE
     },
     MODEL_IS_APPLE: {
