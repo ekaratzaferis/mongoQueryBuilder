@@ -12,7 +12,7 @@ It's fairly simple to use.
 
 ## Installation
 
-#### npm install mongoquerybuilder
+### npm install mongoquerybuilder
 
 https://www.npmjs.com/package/mongoquerybuilder
 
@@ -44,45 +44,45 @@ in the left/right parts of the expressions.
 }
 ```
 
-The allowed operations are ['equal', 'nequal', 'inside', 'gt', 'lt']
+The allowed operations are:
 
-equals is the simplest Mongo query to check equality
+**equals** is the simplest Mongo query to check equality
 ```
 { prop: value }
 ```
-differenr uses the $ne operand to check inequality
+**different** uses the $ne operand to check inequality
 ```
 { prop: { $ne: value } }
 ```
-is_one_of uses the $in operand to check inside an array
+**is_one_of** uses the $in operand to check inside an array
 ```
 { prop: { $in: value } }
 ```
-is_not_one_of uses the $nin operand to check inside an array
+**is_not_one_of** uses the $nin operand to check inside an array
 ```
 { prop: { $in: value } }
 ```
-less_than uses the $lt operand to compare values
+**less_than** uses the $lt operand to compare values
 ```
 { prop: { $lt: value } }
 ```
-greater_than uses the $gt operand to compare values
+**greater_than** uses the $gt operand to compare values
 ```
 { prop: { $gt: value } }
 ```
-greater_equal uses the $gt operand to compare values
+**greater_equal** uses the $gt operand to compare values
 ```
 { prop: { $gte: value } }
 ```
-less_equal uses the $gt operand to compare values
+**less_equal** uses the $gt operand to compare values
 ```
 { prop: { $lte: value } }
 ```
-exists uses the $exists operand to check if that property exists
+**exists** uses the $exists operand to check if that property exists
 ```
 { prop: { $exists: value } }
 ```
-pattern uses the $regex operand to search via a pattern
+**pattern** uses the $regex operand to search via a pattern
 ```
 { prop: { $regex: value } }
 ```
@@ -110,29 +110,29 @@ OR
 ```
 OR some combination of the above.
 
-The allowed operations are ['or', 'and', 'use']
+The allowed operations are:
 
-or uses the $or operand to combine left and right expressions
+**or** uses the $or operand to combine left and right expressions
 ```
 { $or: [left, right]
 ```
-and uses the $and operand to combine left and right expressions
+**and** uses the $and operand to combine left and right expressions
 ```
 { $and: [left, right]
 ```
-not uses the $not operand to negate a condition or expression
+**not** uses the $not operand to negate a condition or expression
 ```
 { $not: condition / expression
 ```
-nor uses the $nor operand to combine left and right expressions
+**nor** uses the $nor operand to combine left and right expressions
 ```
 { $nor: [left, right]
 ```
-match_element uses the $elemMatch operand to match an array element
+**match_element** uses the $elemMatch operand to match an array element
 ```
 { $elemMatch: condition
 ```
-use is the operation that includes a simple condition to the query
+**use** is the operation that includes a simple condition to the query
 
 ## Code Example
 
