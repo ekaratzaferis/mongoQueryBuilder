@@ -16,12 +16,12 @@ describe('Build Mongo Queries', () => {
         var conditions = {
             COUNTRY_IS_USA: {
                 prop: 'build.country',
-                op: 'equal',
+                op: 'equals',
                 value: 'USA'
             },
             MODEL_IS_NOT_APPLE: {
                 prop: 'build.model',
-                op: 'nequal',
+                op: 'different',
                 value: 'APPLE'
             }
         }
@@ -41,12 +41,12 @@ describe('Build Mongo Queries', () => {
         var conditions = {
             COUNTRY_IS_USA: {
                 prop: 'build.country',
-                op: 'equal',
+                op: 'equals',
                 value: 'USA'
             },
             MODEL_IS_NOT_APPLE: {
                 prop: 'build.model',
-                op: 'nequal',
+                op: 'different',
                 value: 'APPLE'
             }
         }
@@ -70,23 +70,65 @@ describe('Build Mongo Queries', () => {
         var conditions = {
             COUNTRY_IS_USA: {
                 prop: 'build.country',
-                op: 'equal',
+                op: 'equals',
                 value: 'USA'
             },
             MODEL_IS_APPLE: {
                 prop: 'build.model',
-                op: 'equal',
+                op: 'equals',
                 value: 'APPLE'
             },
             MODEL_IS_SAMSUNG: {
                 prop: 'build.model',
-                op: 'equal',
+                op: 'equals',
                 value: 'SAMSUNG'
             }
         }
         return queryBuilder(expressions, conditions).then((query) => {
             query['$and'].length.should.equal(2)
             query['$and'][1]['$or'][1]['build.model'].should.equal('SAMSUNG')
+        })
+    })
+    it('Combine expressions (new operands)', () => {
+        var expressions = {
+            FIND_SMARTPHONE_USERS_IN_USA: {
+                op: 'nor',
+                left: 'COUNTRY_IS_USA',
+                right: {
+                    op: 'not',
+                    condition: {
+                        op: 'or',
+                        left: 'COUNTRY_IS_NOT_SCOTLAND',
+                        right: 'COUNTRY_IS_UK'
+                    }
+                }
+            }
+        }
+        var conditions = {
+            COUNTRY_IS_USA: {
+                prop: 'build.country',
+                op: 'equals',
+                value: 'USA'
+            },
+            COUNTRY_IS_NOT_SCOTLAND: {
+                prop: 'build.country',
+                op: 'different',
+                value: 'USA'
+            },
+            COUNTRY_IS_UK: {
+                prop: 'build.country',
+                op: 'equals',
+                value: 'UK'
+            },
+            MODEL_IS_APPLE: {
+                prop: 'build.model',
+                op: 'equals',
+                value: 'APPLE'
+            }
+        }
+        return queryBuilder(expressions, conditions).then((query) => {
+            query['$nor'].length.should.equal(2)
+            query['$nor'][1]['$not']['$or'].length.should.equal(2)
         })
     })
 })

@@ -10,6 +10,12 @@ It's fairly simple to use.
 4) Get back the query
 5) Use Mongoose on Mongo Driver: Model.find(query)
 
+## Installation
+
+####npm install mongoquerybuilder
+
+https://www.npmjs.com/package/mongoquerybuilder
+
 ## API
 
 Mongo queries: The simplest way to describe MongoQueries, would be
@@ -33,32 +39,52 @@ in the left/right parts of the expressions.
 ```javascript
 {
     prop: 'country',  // the document's property that we wish to evaluate
-    op: 'equal',      // the operation that will construct the query
+    op: 'equals',      // the operation that will construct the query
     value: 'UK'       // the desired value (may be an array in case of the "inside" operatio
 }
 ```
 
 The allowed operations are ['equal', 'nequal', 'inside', 'gt', 'lt']
 
-equal is the simplest Mongo query to check equality
+equals is the simplest Mongo query to check equality
 ```
 { prop: value }
 ```
-nequal uses the $ne operand to check inequality
+differenr uses the $ne operand to check inequality
 ```
 { prop: { $ne: value } }
 ```
-inside uses the $in operand to check inside an array
+is_one_of uses the $in operand to check inside an array
 ```
 { prop: { $in: value } }
 ```
-lt uses the $lt operand to compare values
+is_not_one_of uses the $nin operand to check inside an array
+```
+{ prop: { $in: value } }
+```
+less_than uses the $lt operand to compare values
 ```
 { prop: { $lt: value } }
 ```
-gt uses the $gt operand to compare values
+greater_than uses the $gt operand to compare values
 ```
 { prop: { $gt: value } }
+```
+greater_equal uses the $gt operand to compare values
+```
+{ prop: { $gte: value } }
+```
+less_equal uses the $gt operand to compare values
+```
+{ prop: { $lte: value } }
+```
+exists uses the $exists operand to check if that property exists
+```
+{ prop: { $exists: value } }
+```
+pattern uses the $regex operand to search via a pattern
+```
+{ prop: { $regex: value } }
 ```
 
 ### Expressions
@@ -94,6 +120,18 @@ and uses the $and operand to combine left and right expressions
 ```
 { $and: [left, right]
 ```
+not uses the $not operand to negate a condition or expression
+```
+{ $not: condition / expression
+```
+nor uses the $nor operand to combine left and right expressions
+```
+{ $nor: [left, right]
+```
+match_element uses the $elemMatch operand to match an array element
+```
+{ $elemMatch: condition
+```
 use is the operation that includes a simple condition to the query
 
 ## Code Example
@@ -123,17 +161,17 @@ var expressions = {
 var conditions = {
     COUNTRY_IS_USA: {                     // LABEL
         prop: 'build.country',            // DOCUMENT PROPERTY
-        op: 'equal',                      // OPERATION
+        op: 'equals',                      // OPERATION
         value: 'USA'                      // VALUE
     },
     MODEL_IS_APPLE: {
         prop: 'build.model',
-        op: 'equal',
+        op: 'equals',
         value: 'APPLE'
     },
     MODEL_IS_SAMSUNG: {
         prop: 'build.model',
-        op: 'equal',
+        op: 'equals',
         value: 'SAMSUNG'
     }
 }
@@ -171,11 +209,7 @@ The query produces from the builder, has the following format:
 ## Motivation
 
 This project was build in order to enable users not familiar with MongoDB, to construct complex queries,
-by using a simple JSON format.
-
-## Installation
-
-No NPM yet, just copy the root folder into your own project, and install the dependencies from the package.json file.
+by using a simple/readable JSON format.
 
 ## Tests
 
