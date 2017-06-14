@@ -93,7 +93,7 @@ The allowed operations are:
     op: 'and',                      // indicates that will be adding an AND query
     left: 'COUNTRY_IS_UK'           // targets the left part of the expression (in this case a simple condition)
     right: {                        // targets the right part of the expression (in this case, another expression)
-    op: 'or',                    // indicates that will be adding an OR query
+        op: 'or',                   // indicates that will be adding an OR query
         left: 'USER_IS_OLD',   // simple condition
         right: 'USER_IS_RICH'  // simple condition
     }
