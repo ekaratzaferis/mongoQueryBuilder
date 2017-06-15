@@ -170,7 +170,6 @@ describe('Build Mongo Queries', () => {
             }
         }
         return queryBuilder(expressions, conditions).then((query) => {
-            console.log(JSON.stringify(query, null, 4))
             query['$nor'].length.should.equal(2)
             query['$nor'][1]['$not']['$or'].length.should.equal(2)
         })
