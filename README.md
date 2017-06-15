@@ -39,8 +39,9 @@ in the left/right parts of the expressions.
 ```javascript
 {
     prop: 'country',  // the document's property that we wish to evaluate
-    op: 'equals',      // the operation that will construct the query
+    op: 'equals',     // the operation that will construct the query
     value: 'UK'       // the desired value (may be an array in case of the "inside" operatio
+    isDate: false     // a flag that shows whether the value contains a date string
 }
 ```
 

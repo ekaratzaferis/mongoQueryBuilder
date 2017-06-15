@@ -131,4 +131,48 @@ describe('Build Mongo Queries', () => {
             query['$nor'][1]['$not']['$or'].length.should.equal(2)
         })
     })
+    it('Combine expressions (date operand)', () => {
+        var expressions = {
+            FIND_SMARTPHONE_USERS_IN_USA: {
+                op: 'nor',
+                left: 'COUNTRY_IS_USA',
+                right: {
+                    op: 'not',
+                    condition: {
+                        op: 'or',
+                        left: 'COUNTRY_IS_NOT_SCOTLAND',
+                        right: 'DATE_ONE_MONTH_AGO'
+                    }
+                }
+            }
+        }
+        var conditions = {
+            COUNTRY_IS_USA: {
+                prop: 'build.country',
+                op: 'equals',
+                value: 'USA'
+            },
+            COUNTRY_IS_NOT_SCOTLAND: {
+                prop: 'build.country',
+                op: 'different',
+                value: 'USA'
+            },
+            DATE_ONE_MONTH_AGO: {
+                prop: 'lastSeen',
+                op: 'equals',
+                value: '2017-05-01',
+                isDate: true
+            },
+            MODEL_IS_APPLE: {
+                prop: 'build.model',
+                op: 'equals',
+                value: 'APPLE'
+            }
+        }
+        return queryBuilder(expressions, conditions).then((query) => {
+            console.log(JSON.stringify(query, null, 4))
+            query['$nor'].length.should.equal(2)
+            query['$nor'][1]['$not']['$or'].length.should.equal(2)
+        })
+    })
 })
